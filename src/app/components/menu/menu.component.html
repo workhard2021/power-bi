@@ -1,0 +1,14 @@
+<div class="auth-container">
+    <h2  *ngIf="getAccountObj">Authentifié</h2>
+    <h2  *ngIf="!getAccountObj">Authentifier vous!</h2>
+    <button (click)="signIn()" *ngIf="!getAccountObj">Sign In</button>
+    <div class="" *ngIf="getAccountObj">
+      <p>Welcome - team aikyo , {{ getAccountObj.name }}</p>
+      <div class="item">
+        <a class="title" href="/">{{ 'Home' }}</a>
+        <a class="title" href="/report">{{ 'Report 1' }}</a>
+        <a class="title" href="/report-2">{{ 'Report 2' }}</a>
+      </div>
+      <button (click)="signOut()">Sign Out</button>
+    </div>
+</div>

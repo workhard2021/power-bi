@@ -21,7 +21,6 @@
     "@azure/msal-angular": "^3.0.25",
     "@azure/msal-browser": "^3.26.1",
     "axios": "^1.7.7",
-    "msal": "^1.4.18",
     "powerbi-client": "^2.23.1",
     "powerbi-client-angular": "^3.0.5",
     "rxjs": "~7.8.0",

@@ -1,28 +1,30 @@
 # AppPowerBi
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.2.
+##  1 - S'inscrire sur le Microsoft Azure et récupérer tenantId(Identifiant de location) de l'organisation(entreprise)
 
-## Development server
+##  2 -  Créer votre application client azure et configurer
+ Authentification et approbation de l'application (spa).
+   * Ajout des urls de redirection de l'application(SPA) qui doit être authenfiéé -> (Auhenfication)
+   * Ajouter et approuver les autorisations aux services( Dans notre cas, on accorde les accès aux ressources(scopes) de l'application powerbi) ->(Api autorisées)
+   * Créer un secret pour la configuration si nécessaire(dans notre cas pas nécessaire) ->(certificats & secrets)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 3 - Créer votre dataset(Model) s'il n'existe pas, qui servira de créer les rapports powerbi
+ * Créer votre rapport
+ 
+# Angular
+## 1 - Configuration de l'application client en Angular(spa)
+##### Authentification 
+Mettre à jour les clés suivantes qui se trouve dans le fichier de configuration :
+     tenantId
+    - redirectUri: url de redirection de l'application angular, en local (https:localhost:4200) ou url correspondant
+    - clientId
+   Run `npm install & ng serve`
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-# power-bi
+##### Intégration powerbi pour le repport
+   Mettre à jour les clés suivantes dans les composants  angular extension(ts)
+    - datasetId
+    - reportId
+    - urlReport(ne change pas)
+## NB:
+  La configuration d'affichage de powerbi peut changer en fonction de type de configuration, il faut donc l'adapter à vos besoin! [Voir la documentation power bi](https://learn.microsoft.com/fr-fr/javascript/api/overview/powerbi/).
+# pwb-git-action-frontend

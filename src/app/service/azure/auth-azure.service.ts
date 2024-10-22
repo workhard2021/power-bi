@@ -85,7 +85,7 @@ export class AuthAzureService {
     try {
       return await this.myMSALObj.acquireTokenSilent(request);
     } catch (error) {
-      console.log("Silent token acquisition failed.");
+       console.log("Silent token acquisition failed.");
       if (error instanceof msal.InteractionRequiredAuthError) {
         console.log("Acquiring token using redirect");
         this.myMSALObj.acquireTokenRedirect(request);

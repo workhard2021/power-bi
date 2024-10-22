@@ -1,6 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
 import * as pbi from 'powerbi-client';
-import { AuthAzureService } from '../../service/azure/auth-azure.service';;
 import { PowerbiService } from './service/powerbi-auth.service';
 
 @Component({
@@ -11,32 +10,24 @@ import { PowerbiService } from './service/powerbi-auth.service';
 })
 
 export class PowerBiReportComponent {
-  apiUrl:string="https://login.microsoftonline.com/4d24a5e1-43ac-47f2-8666-7018b13dec8a/oauth2/v2.0/token";
-  urlReport:string="https://api.powerbi.com/v1.0/myorg/GenerateToken"
-  reportId="e4e1827f-7826-40c2-ae6b-8e606b3ecb72"//"8655950c-beb7-484c-957a-6879c6004e96"
-  datasetId="cec66f70-881a-4e8a-9d44-cf57f4bbf9be"//"b642ae4f-c6ab-4dbb-8e47-9faf12b1164b"
-  initToken:any;
-
-  constructor(private el: ElementRef,private powerbiService:PowerbiService,private authAzureService: AuthAzureService) {}
+  reportId="e4e1827f-7826-40c2-ae6b-8e606b3ecb72";
+  groupId="43f75457-3e2a-4177-ac16-a00b71de170d";
+  datasetId="cec66f70-881a-4e8a-9d44-cf57f4bbf9be";
+  dataSetsData:any=[]
+  onSwitch:boolean=false;
+  constructor(private el: ElementRef,private powerbiService:PowerbiService) {}
 
   async ngAfterViewInit() {
-        const accessToken= await this.authAzureService.acquireTokenPowerBi()|| '';
-        const data:any={
-         "datasets": [
-           {
-             "id": this.datasetId
-           }
-         ],
-         "reports": [
-           {
-             "id": this.reportId
-           }
-         ]};
-         if(accessToken){
-          this.powerbiService.getPowerBiReport(data,accessToken).subscribe((powerbiToken:any)=>{
-            this.initPowerBi(powerbiToken.token,this.reportId)
-           })
-         }
+      const body={
+        reportId:this.reportId,
+        groupId: this.groupId,
+      }
+      this.powerbiService.getToken(body).subscribe((accessToken:any)=>{
+        this.initPowerBi(accessToken,this.reportId)
+      })
+      this.powerbiService.getDataSets({datasetId:this.datasetId}).subscribe((data)=>{
+          this.dataSetsData=data;
+      })
   }
 
   initPowerBi(accessToken:string,reportId:string): void | null {
@@ -70,7 +61,7 @@ export class PowerBiReportComponent {
       pbi.factories.wpmpFactory,
       pbi.factories.routerFactory
     );
-    powerbi.embed(reportContainer,embedConfig);
+    const report=powerbi.embed(reportContainer,embedConfig);
+    report.off("rendered");
   }
-
 }
